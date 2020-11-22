@@ -7,7 +7,6 @@ const WeatherResults = (props) => {
     if (props.data) {
         output = 
             <div>
-                <p>{data.dt}</p>
                 <h2>{data.name}, {data.sys.country}</h2>
 
                 <img src={`http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`} />
