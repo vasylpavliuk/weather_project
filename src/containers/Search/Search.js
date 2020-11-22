@@ -3,6 +3,7 @@ import axios from "axios";
 import { connect } from "react-redux";
 
 import classes from './Search.module.css';
+import SearchInput from '../../components/SearchInput/SearchInput';
 import WeatherResults from '../../components/WeatherResults/WeatherResults';
 
 const BASEURL = "https://api.openweathermap.org/data/2.5/weather?";
@@ -36,11 +37,11 @@ const Search = (props) => {
 
     return (
         <div className={classes.Search}>
-            <input type='text' 
-                placeholder='Choose any city to find out the weather' 
-                onInput={(event) => props.onInputQuery(event.target.value)}>
-            </input>
-            <button onClick={props.onBtnClicked}>Search</button>
+            <SearchInput 
+                onInputTerm={(value) => props.onInputQuery(value)}
+                clicked={props.onBtnClicked}
+                placeholder="Search city..." 
+                />
             {/* <h3>{inputQuery}</h3>
             <h3>{btnClicked ? "True" : "False"}</h3> */}
             <WeatherResults data={props.weatherData} />

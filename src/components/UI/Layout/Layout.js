@@ -5,15 +5,14 @@ import {
   Dropdown,
   Grid,
   Header,
-  Image,
   List,
   Menu,
   Segment,
   Icon
 } from 'semantic-ui-react'
-// import __ from '../../../assets/images/logo.png'
 
-import classes from './Layout.module.css'
+import classes from './Layout.module.css';
+import Search from '../../../containers/Search/Search';
 
 const Layout = () => (
   <div>
@@ -45,15 +44,40 @@ const Layout = () => (
       </Container>
     </Menu>
 
-    <Container text style={{ marginTop: '7em' }}>
-      <Header as='h1' >Your weather search service</Header>
-      {/* /////////////////////////////////////////////////////////////
-      /////////////////////////////////////////////////////////////
-      /////////////////////////////////////////////////////////////
-      /////////////CONTENT//////////////////////////////
-      /////////////////////////////////////////////////////////////
-      ///////////////////////////////////////////////////////////// */}
-    </Container>
+    <Grid>
+      <Grid.Column width={4} style={{ marginLeft: '1rem' }}>
+        <Container text style={{ marginTop: '3em' }}>
+          <div class="ui card">
+            <div class="content">
+              <div class="header">
+                Your favorites
+                <i aria-hidden="true" class="heart outline icon" style={{ marginLeft: '1em' }}></i>
+              </div>
+            </div>
+
+            <div class="content">
+              <div class="ui feed">
+                <div class="event">
+                  <div class="label"><img src="/images/avatar/small/jenny.jpg"/>
+                   </div>
+                  <div class="content"><div class="date">1 day ago</div><div class="summary">You added <a>Jenny Hess</a> to your <a>coworker</a> group.
+                  </div>
+                  </div>
+                  </div>
+                </div>
+            </div>
+          </div>
+        </Container>
+      </Grid.Column>
+
+      <Grid.Column width={9}>
+        <Container text style={{ marginTop: '3em', height: '70vh' }}>
+          <Header as='h1' >Your weather search service</Header>
+          <Search />
+        </Container>
+      </Grid.Column>
+    </Grid>    
+
 
     <Segment inverted vertical style={{ margin: '5em 0em 0em', padding: '5em 0em' }}>
       <Container textAlign='center'>
