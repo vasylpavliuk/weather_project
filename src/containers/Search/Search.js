@@ -1,4 +1,4 @@
-import React, {  useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import axios from "axios";
 import { connect } from "react-redux";
 
@@ -12,9 +12,7 @@ let fetchedQuery = "";
 
 const Search = (props) => {
     const inputQuery = props.inputQuery;
-    const btnClicked = props.btnClicked;
-    const weatherData = props.weatherData;
-
+    
     useEffect(() => {
         async function fetchData(query) {
             const API_key = "6e3cbb643110d9f240180795db07e22f";
@@ -34,7 +32,7 @@ const Search = (props) => {
             fetchData(inputQuery).then(response => props.getWeatherData(response.data));
              fetchedQuery = inputQuery;
         }
-    }, [btnClicked]);
+    }, [props.btnClicked]);
 
     return (
         <div className={classes.Search}>
@@ -45,7 +43,7 @@ const Search = (props) => {
             <button onClick={props.onBtnClicked}>Search</button>
             {/* <h3>{inputQuery}</h3>
             <h3>{btnClicked ? "True" : "False"}</h3> */}
-            <WeatherResults data={weatherData} />
+            <WeatherResults data={props.weatherData} />
         </div>
     )
 }
@@ -71,7 +69,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(Search);
 
 
 ////////// Basic implementation using React hooks
-/////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // import React, {  useState, useEffect, useRef } from "react";
 // import axios from "axios";
 
