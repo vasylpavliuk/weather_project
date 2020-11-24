@@ -6,8 +6,8 @@ import classes from './Search.module.css';
 import SearchInput from '../../components/SearchInput/SearchInput';
 import WeatherResults from '../../components/WeatherResults/WeatherResults';
 
-const BASEURL = "https://api.openweathermap.org/data/2.5/weather?";
-// const BASEURL = "https://api.openweathermap.org/data/2.5/forecast?";
+const weatherURL = "https://api.openweathermap.org/data/2.5/weather?";
+const forecastURL = "https://api.openweathermap.org/data/2.5/forecast?";
 let fetchedQuery = "";
 
 
@@ -15,9 +15,10 @@ const Search = (props) => {
     const inputQuery = props.inputQuery;
     
     useEffect(() => {
-        async function fetchData(query) {
-            const API_key = "6e3cbb643110d9f240180795db07e22f";
-            const response = await axios.get(BASEURL, {
+        async function fetchWeather(query) {
+            // const API_key = "6e3cbb643110d9f240180795db07e22f";
+            const API_key = "b7df8770a166b248e016398190a4d504";
+            const response = await axios.get(weatherURL, {
                 params: {
                     q: query,
                     lang: "uk",
@@ -30,10 +31,33 @@ const Search = (props) => {
         }
         
         if(inputQuery && inputQuery !== fetchedQuery) {
-            fetchData(inputQuery).then(response => props.getWeatherData(response.data));
+            fetchWeather(inputQuery).then(response => props.getWeatherData(response.data));
              fetchedQuery = inputQuery;
         }
     }, [props.btnClicked]);
+
+    useEffect(() => {
+        async function fetchForecast(query) {
+            // const API_key = "6e3cbb643110d9f240180795db07e22f";
+            const API_key = "b7df8770a166b248e016398190a4d504";
+            const response = await axios.get(weatherURL, {
+                params: {
+                    q: query,
+                    lang: "uk",
+                    appid: API_key,
+                    units: "metric"
+                },
+                
+            })
+            return response;
+        }
+        
+        if(inputQuery && inputQuery !== fetchedQuery) {
+            fetchWeather(inputQuery).then(response => props.getWeatherData(response.data));
+             fetchedQuery = inputQuery;
+        }
+    }, [props.btnClicked]);
+
 
     return (
         <div className={classes.Search}>
@@ -65,56 +89,3 @@ const  mapDispatchToProps = dispatch => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Search);
-
-
-
-////////// Basic implementation using React hooks
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// import React, {  useState, useEffect, useRef } from "react";
-// import axios from "axios";
-
-// import classes from './Search.module.css';
-
-// const BASEURL = "https://api.openweathermap.org/data/2.5/weather?";
-// const BASEURL = "https://api.openweathermap.org/data/2.5/forecast?";
-// let fetchedQuery = "";
-
-// const Search = (props) => {
-//     let [inputQuery, inputQueryHandler] = useState("");
-//     let [buttonClicked, buttonClickedHandler] = useState(false);
-//     let [weatherData, setWeatherData] = useState("");
-
-//     useEffect(() => {
-//         async function fetchData(query) {
-//             const API_key = "6e3cbb643110d9f240180795db07e22f";
-//             const response = await axios.get(BASEURL, {
-//                 params: {
-//                     q: query,
-//                     lang: "uk",
-//                     appid: API_key,
-//                     units: "metric"
-//                 },
-                
-//             })
-//             return response;
-//         }
-        
-//         if(inputQuery && inputQuery !== fetchedQuery) {
-//             fetchData(inputQuery).then(response => setWeatherData(response.data));
-//              fetchedQuery = inputQuery;
-//         }
-//     }, [buttonClicked]);
-
-//     return (
-//         <div className={classes.Search}>
-//             <input type='text' 
-//                 placeholder='Choose any city to find out the weather' 
-//                 onInput={(event) => inputQueryHandler(inputQuery = event.target.value)}>
-//             </input>
-//             <button onClick={() => buttonClickedHandler(!buttonClicked)}>Search</button>
-//             <WeatherResults data={weatherData} />
-//         </div>
-//     )
-// }
-
-// export default Search;

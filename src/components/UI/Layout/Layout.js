@@ -21,7 +21,7 @@ const Layout = () => (
         </Container>
       </Grid.Column>
 
-      <Grid.Column width={9}>
+      <Grid.Column width={11}>
         <Container text style={{ marginTop: '3em', height: '70vh' }}>
           <Header as='h1' >Your weather search service</Header>
           <Search />

@@ -2,7 +2,6 @@ const initialState = {
     inputQuery: "",
     buttonClicked: false,
     weatherData: "",
-    showFavourites: false,
     favouriteCitiesIDs: [],
     favouriteCityData: []
 }
@@ -23,11 +22,6 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 weatherData: action.payload
-            };
-        case "GET_SHOW_FAVOURITES":
-            return {
-                ...state,
-                showFavourites: !state.showFavourites
             };
         case "ADD_FAVOURITE_CITIES_IDS":
             return {
