@@ -1,5 +1,4 @@
 import React from "react";
-import { connect } from "react-redux";
 
 const WeatherResults = (props) => {
     const data = props.data;
@@ -8,14 +7,6 @@ const WeatherResults = (props) => {
     if (props.data) {
         output = 
             <div>
-                <div  style={{ textAlign: "right" }}>
-                    <div className="ui left labeled button" >
-                        <a className="ui right pointing basic label">Push the heart button to save current city</a>
-                        <button className="ui icon button" tabIndex="0" onClick={ () => saveIdToLocalStorage(props.data.id)}>
-                            <i aria-hidden="true" className="heart icon"></i> Like
-                        </button>
-                    </div>
-                </div>
                 <p>{new Date(Date.now()).toDateString()}</p>
                 <h2>{data.name}, {data.sys.country}</h2>
 
@@ -26,16 +17,6 @@ const WeatherResults = (props) => {
         
     }
 
-    function saveIdToLocalStorage(id){
-        let a = [];
-        a = JSON.parse(localStorage.getItem('citiesIDs')) || [];
-        if (!a.includes(id)) a.push(id);
-        localStorage.setItem('citiesIDs', JSON.stringify(a));
-        props.addFavouriteCitiesIDs(localStorage.getItem('citiesIDs'));
-        console.log(JSON.parse(localStorage.getItem('citiesIDs')));
-        console.log(typeof(JSON.parse(localStorage.getItem('citiesIDs'))));
-    }
-
     return (    
         <React.Fragment>
             {output}
@@ -43,10 +24,4 @@ const WeatherResults = (props) => {
     )
 }
 
-const  mapDispatchToProps = dispatch => {
-    return {
-        addFavouriteCitiesIDs: (data) => dispatch({ type: "ADD_FAVOURITE_CITIES_IDS", payload: data })
-    }
-} 
-
-export default connect(null, mapDispatchToProps)(WeatherResults);
+export default WeatherResults;

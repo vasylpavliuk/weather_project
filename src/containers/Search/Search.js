@@ -1,10 +1,17 @@
 import React, { useEffect } from "react";
 import axios from "axios";
 import { connect } from "react-redux";
+import {
+    Container,
+    Grid,
+    Header
+  } from 'semantic-ui-react'
+  
 
 import classes from './Search.module.css';
 import SearchInput from '../../components/SearchInput/SearchInput';
 import WeatherResults from '../../components/WeatherResults/WeatherResults';
+import ForecastResults from '../../components/ForecastResults/ForecastResults';
 
 const weatherURL = "https://api.openweathermap.org/data/2.5/weather?";
 const forecastURL = "https://api.openweathermap.org/data/2.5/forecast?";
@@ -40,7 +47,7 @@ const Search = (props) => {
         async function fetchForecast(query) {
             // const API_key = "6e3cbb643110d9f240180795db07e22f";
             const API_key = "b7df8770a166b248e016398190a4d504";
-            const response = await axios.get(weatherURL, {
+            const response = await axios.get(forecastURL, {
                 params: {
                     q: query,
                     lang: "uk",
@@ -53,11 +60,18 @@ const Search = (props) => {
         }
         
         if(inputQuery && inputQuery !== fetchedQuery) {
-            fetchWeather(inputQuery).then(response => props.getWeatherData(response.data));
+            fetchForecast(inputQuery).then(response => props.getForecastData(response.data));
              fetchedQuery = inputQuery;
         }
     }, [props.btnClicked]);
 
+    function saveIdToLocalStorage(id){
+        let a = [];
+        a = JSON.parse(localStorage.getItem('citiesIDs')) || [];
+        if (!a.includes(id)) a.push(id);
+        localStorage.setItem('citiesIDs', JSON.stringify(a));
+        props.addFavouriteCitiesIDs(localStorage.getItem('citiesIDs'));
+    }
 
     return (
         <div className={classes.Search}>
@@ -67,7 +81,32 @@ const Search = (props) => {
                 placeholder="Search city..." 
                 />
 
-            <WeatherResults data={props.weatherData} />
+                {
+                    props.weatherData ? 
+                    <div  style={{ textAlign: "right", marginTop: "0" }}>
+                        <div className="ui left labeled button" >
+                            <a className="ui right pointing basic label">Push the heart button to save current city</a>
+                            <button className="ui icon button" tabIndex="0" onClick={ () => saveIdToLocalStorage(props.weatherData.id)}>
+                                <i aria-hidden="true" className="heart icon"></i> Like
+                            </button>
+                        </div>
+                    </div> : null
+                }
+                
+
+            <Grid>
+            <Grid.Column width={4} style={{ marginLeft: '1rem' }}>
+                <Container text style={{ marginTop: '1em' }}>
+                    <WeatherResults data={props.weatherData} /> 
+                </Container>
+            </Grid.Column>
+
+            <Grid.Column width={11}>
+                <Container text style={{ marginTop: '1em' }}>
+                     <ForecastResults data={props.forecastData} />
+                </Container>
+            </Grid.Column>
+            </Grid>    
         </div>
     )
 }
@@ -76,7 +115,8 @@ const mapStateToProps = state => {
     return {
         inputQuery: state.inputQuery,
         btnClicked: state.buttonClicked,
-        weatherData: state.weatherData
+        weatherData: state.weatherData,
+       forecastData: state.forecastData,
     };
 };
 
@@ -84,7 +124,9 @@ const  mapDispatchToProps = dispatch => {
     return {
         onInputQuery: (term) => dispatch({ type: "INPUT_CHANGED", payload: term }),
         onBtnClicked: () => dispatch({ type: "BUTTON_CLICKED" }),
-        getWeatherData: (data) => dispatch({ type: "GET_WEATHER_DATA", payload: data })
+        addFavouriteCitiesIDs: (data) => dispatch({ type: "ADD_FAVOURITE_CITIES_IDS", payload: data }),
+        getWeatherData: (data) => dispatch({ type: "GET_WEATHER_DATA", payload: data }),
+        getForecastData: (data) => dispatch({ type: "GET_FORECAST_DATA", payload: data })
     }
 }
 

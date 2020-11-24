@@ -5,13 +5,18 @@ import { Icon } from 'semantic-ui-react'
 import FavouriteCity from './FavouriteCity/FavouriteCity';
 
 const Favourites = props => {
-
+    let output = '';
     useEffect(() => {
         function getIdFromLocalStorage(){
             props.getFavouriteCitiesIDs(localStorage.getItem('citiesIDs'));
         };
         getIdFromLocalStorage();
     })
+
+    if (props.favouriteCitiesIDs) {
+        output =   props.favouriteCitiesIDs.length ?  JSON.parse(props.favouriteCitiesIDs).map((ID, index) => <FavouriteCity cityID={ID} key={ID} /> ) : null 
+    } 
+
 
     return (
         <div className="ui card" style={{textAlign: "center"}}>
@@ -21,7 +26,7 @@ const Favourites = props => {
                     <Icon name='heart' size='large' style={{marginLeft: "1.5rem"}} />
                 </div>
             </div>
-                { props.favouriteCitiesIDs.length ?  JSON.parse(props.favouriteCitiesIDs).map((ID, index) => <FavouriteCity cityID={ID} key={ID} /> ) : null }
+               { output }
         </div>
     )
 

@@ -2,6 +2,7 @@ const initialState = {
     inputQuery: "",
     buttonClicked: false,
     weatherData: "",
+    forecastData: "",
     favouriteCitiesIDs: [],
     favouriteCityData: []
 }
@@ -19,6 +20,11 @@ const reducer = (state = initialState, action) => {
                 buttonClicked: !state.buttonClicked,
             };
         case "GET_WEATHER_DATA":
+            return {
+                ...state,
+                weatherData: action.payload
+            };
+        case "GET_FORECAST_DATA":
             return {
                 ...state,
                 weatherData: action.payload
