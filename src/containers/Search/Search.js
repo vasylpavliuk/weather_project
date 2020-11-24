@@ -42,8 +42,7 @@ const Search = (props) => {
                 clicked={props.onBtnClicked}
                 placeholder="Search city..." 
                 />
-            {/* <h3>{inputQuery}</h3>
-            <h3>{btnClicked ? "True" : "False"}</h3> */}
+
             <WeatherResults data={props.weatherData} />
         </div>
     )
