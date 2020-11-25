@@ -37,7 +37,7 @@ const reducer = (state = initialState, action) => {
         case "GET_FAVOURITE_CITY_DATA":
             return {
                 ...state,
-                favouriteCityData: action.payload
+                favouriteCityData: state.favouriteCityData.concat(action.payload)
             }
     }
 

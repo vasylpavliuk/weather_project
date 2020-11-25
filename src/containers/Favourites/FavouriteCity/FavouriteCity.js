@@ -31,9 +31,9 @@ const FavouriteCity = props => {
     }, []);
         
     return (
-       <React.Fragment>
-             { Object.keys(props.favouriteCityData).length ? <ShowFavCity cityData={props.favouriteCityData} /> : null }
-        </React.Fragment>
+        <React.Fragment>
+        { props.favouriteCityData.length ? props.favouriteCityData.map((data) => <ShowFavCity cityData={data}  key={data.id} />) : null }
+       </React.Fragment>
     )
 }
 
