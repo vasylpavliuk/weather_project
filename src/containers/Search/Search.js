@@ -3,8 +3,7 @@ import axios from "axios";
 import { connect } from "react-redux";
 import {
     Container,
-    Grid,
-    Header
+    Grid
   } from 'semantic-ui-react'
   
 
@@ -124,7 +123,7 @@ const  mapDispatchToProps = dispatch => {
     return {
         onInputQuery: (term) => dispatch({ type: "INPUT_CHANGED", payload: term }),
         onBtnClicked: () => dispatch({ type: "BUTTON_CLICKED" }),
-        addFavouriteCitiesIDs: (data) => dispatch({ type: "ADD_FAVOURITE_CITIES_IDS", payload: data }),
+        addFavouriteCitiesIDs: (data) => dispatch({ type: "SET_FAVOURITE_CITIES_IDS", payload: data }),
         getWeatherData: (data) => dispatch({ type: "GET_WEATHER_DATA", payload: data }),
         getForecastData: (data) => dispatch({ type: "GET_FORECAST_DATA", payload: data })
     }

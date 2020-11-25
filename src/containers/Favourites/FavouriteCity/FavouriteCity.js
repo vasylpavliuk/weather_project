@@ -29,10 +29,18 @@ const FavouriteCity = props => {
                }
             )
     }, []);
+
+    function onDeleteClicked(cityId) {
+        let a = [];
+        a = JSON.parse(localStorage.getItem('citiesIDs')) || [];
+        a.filter(id => id !== cityId);
+        localStorage.setItem('citiesIDs', JSON.stringify(a));
+        props.setFavouriteCitiesIDs(localStorage.getItem('citiesIDs'));
+    }
         
     return (
         <React.Fragment>
-        { props.favouriteCityData.length ? props.favouriteCityData.map((data) => <ShowFavCity cityData={data}  key={data.id} />) : null }
+        { props.favouriteCityData.length ? props.favouriteCityData.map((data) => <ShowFavCity cityData={data}  key={data.id}  btnClicked={(id) => onDeleteClicked(id)} />) : null }
        </React.Fragment>
     )
 }
@@ -46,7 +54,8 @@ const mapStateToProps = state => {
 
 const  mapDispatchToProps = dispatch => {
     return {
-        getFavouriteCityData: (data) => dispatch({ type: "GET_FAVOURITE_CITY_DATA", payload: data })
+        getFavouriteCityData: (data) => dispatch({ type: "GET_FAVOURITE_CITY_DATA", payload: data }),
+        setFavouriteCitiesIDs: (data) => dispatch({ type: "SET_FAVOURITE_CITIES_IDS", payload: data })
     }
 } 
 

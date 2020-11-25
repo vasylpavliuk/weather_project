@@ -29,7 +29,7 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 weatherData: action.payload
             };
-        case "ADD_FAVOURITE_CITIES_IDS":
+        case "SET_FAVOURITE_CITIES_IDS":
             return {
                 ...state,
                 favouriteCitiesIDs: action.payload

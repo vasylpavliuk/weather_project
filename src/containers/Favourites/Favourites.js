@@ -41,7 +41,7 @@ const mapStateToProps = state => {
 
 const  mapDispatchToProps = dispatch => {
     return {
-        getFavouriteCitiesIDs: (data) => dispatch({ type: "ADD_FAVOURITE_CITIES_IDS", payload: data })
+        getFavouriteCitiesIDs: (data) => dispatch({ type: "SET_FAVOURITE_CITIES_IDS", payload: data })
     }
 } 
 
