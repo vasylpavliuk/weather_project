@@ -33,8 +33,8 @@ const FavouriteCity = props => {
     function onDeleteClicked(cityId) {
         let a = [];
         a = JSON.parse(localStorage.getItem('citiesIDs')) || [];
-        a.filter(id => id !== cityId);
-        localStorage.setItem('citiesIDs', JSON.stringify(a));
+        const b = a.filter(id => id !== cityId);
+        localStorage.setItem('citiesIDs', JSON.stringify(b));
         props.setFavouriteCitiesIDs(localStorage.getItem('citiesIDs'));
     }
         
